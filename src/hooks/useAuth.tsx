@@ -38,8 +38,8 @@ export default function CredentialsProvider({ children }: { children: React.Reac
     if (validCredentials) {
       setCredentials(validCredentials);
     } else {
-      await deleteCredentials();
       setCredentials(null);
+      alert("Invalid sign in credentials")
     }
   }, []);
   const signOut = useCallback(async () => {
