@@ -16,24 +16,20 @@ export const SignInScreen = (): React.JSX.Element => {
   const defaultCredentials = reviewCredentials || currentConfig;
   const [loading, setLoading] = useState(false);
   const [serverURL, setServerURL] = useState(defaultCredentials.serverURL);
-  const [apiKey, setApiKey] = useState(defaultCredentials.apiKey);
-  const [userEmail, setUserEmail] = useState(defaultCredentials.userEmail);
-  const [userHmac, setUserHmac] = useState(defaultCredentials.userHmac);
-
+  const [userJWTToken, setUserJWTToken] = useState(defaultCredentials.userJWTToken);
+  
   useEffect(() => {
     if (reviewCredentials) {
       setServerURL(reviewCredentials.serverURL);
-      setApiKey(reviewCredentials.apiKey);
-      setUserEmail(reviewCredentials.userEmail);
-      setUserHmac(reviewCredentials.userHmac);
+      setUserJWTToken(reviewCredentials.userJWTToken);
     }
   }, [reviewCredentials]);
 
   const handleSubmit = useCallback(async () => {
     setLoading(true);
-    await signIn({ apiKey, userEmail, userHmac, serverURL });
+    await signIn({ serverURL, userJWTToken });
     setLoading(false);
-  }, [signIn, apiKey, userEmail, userHmac, serverURL]);
+  }, [signIn, serverURL, userJWTToken]);
 
   if (credentials) {
     throw new Error('User is already signed in');
@@ -75,9 +71,7 @@ export const SignInScreen = (): React.JSX.Element => {
               onValueChange={
                 ((itemValue: keyof typeof config) => {
                   const c = config[itemValue];
-                  setApiKey(c.apiKey);
-                  setUserEmail(c.userEmail);
-                  setUserHmac(c.userHmac);
+                  setUserJWTToken(c.userJWTToken);
                   setServerURL(c.serverURL);
                 }) as (itemValue: string) => void
               }
@@ -87,9 +81,7 @@ export const SignInScreen = (): React.JSX.Element => {
               })}
             </Select>
           </Box>
-          <TextInput placeholder="Project API Key" value={apiKey} onChangeText={setApiKey} />
-          <TextInput placeholder="User email" value={userEmail} onChangeText={setUserEmail} />
-          <TextInput placeholder="User HMAC" value={userHmac} onChangeText={setUserHmac} />
+          <TextInput placeholder="User JWT Token" value={userJWTToken} onChangeText={setUserJWTToken} />
           <TextInput placeholder="Server URL" value={serverURL} onChangeText={setServerURL} />
           <CustomButton title="Sign in" loading={loading} onPress={handleSubmit} />
         </View>

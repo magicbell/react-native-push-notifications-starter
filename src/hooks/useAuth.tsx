@@ -1,15 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-import { UserClient } from 'magicbell/user-client';
+import { Client as UserClient } from '@magicbell/user-client';
 import useDeviceToken from './useDeviceToken';
 
-const storageKey = 'mb';
+const storageKey = 'mbv2';
 
 export type Credentials = {
-  apiKey: string;
-  userEmail: string;
-  userHmac: string;
+  userJWTToken: string;
   serverURL: string;
 };
 
@@ -64,26 +62,23 @@ const getCredentials = async () => {
     return null;
   }
   try {
-    const { apiKey, userEmail, userHmac, serverURL } = JSON.parse(value);
+    const { serverURL, userJWTToken } = JSON.parse(value);
     const client = new UserClient({
-      apiKey: apiKey,
-      userEmail: userEmail,
-      userHmac: userHmac,
-      host: serverURL,
+      token: userJWTToken,
+      baseUrl: `${serverURL}/v2`,
     });
-    const config = await client.request({
-      method: 'GET',
-      path: '/config',
-    });
-    if (config) {
-      return { apiKey, userEmail, userHmac, serverURL };
+
+    // Doing a basic request to see if the token is valid.
+    // TODO: replace this with a more generic endpoint like `/v2/config` once that's available in the API spec
+    const testResponse = await client.channels.getMobilePushExpoTokens();
+    if (testResponse) {
+      return { serverURL, userJWTToken };
     }
   } catch (e) {
     console.error('Error parsing credentials', e);
     await deleteCredentials();
     return null;
   }
-  return null;
 };
 
 const storeCredentials = async (value: Credentials) => {

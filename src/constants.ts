@@ -75,22 +75,12 @@ export const routes = {
 
 export const config: { [key: string]: Credentials } = {
   prod: {
-    apiKey: 'd6a3cf19179a45a5daa9ac7f3f37e9d49914d2ad',
-    userEmail: 'matt@magicbell.io',
-    userHmac: '5n4ooUtzydnYq5GYh6PIWGeP2alepTf/Qgb/Sp/g3Co=',
+    userJWTToken: '',
     serverURL: 'https://api.magicbell.com',
   },
   local: {
-    apiKey: '8cd17191a14339cb1d4e58c4ea471eeca51d2c70',
-    userEmail: 'matt@magicbell.io',
-    userHmac: '',
-    serverURL: 'https://1b35-79-153-3-135.ngrok-free.app',
-  },
-  review: {
-    apiKey: '552efd58f59315d065e45b07f8d8f8a2751c2b5b',
-    userEmail: 'matthewoxley001@gmail.com',
-    userHmac: '5n4ooUtzydnYq5GYh6PIWGeP2alepTf/Qgb/Sp/g3Co=',
-    serverURL: 'https://api-4374.magicbell.cloud/',
+    userJWTToken: '',
+    serverURL: 'http://localhost:3000',
   },
 };
 
