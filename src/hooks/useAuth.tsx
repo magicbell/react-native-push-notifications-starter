@@ -70,7 +70,7 @@ const getCredentials = async () => {
 
     // Doing a basic request to see if the token is valid.
     // TODO: replace this with a more generic endpoint like `/v2/config` once that's available in the API spec
-    const testResponse = await client.channels.getMobilePushExpoTokens();
+    const testResponse = await client.channels.getMobilePushApnsTokens();
     if (testResponse) {
       return { serverURL, userJWTToken };
     }
