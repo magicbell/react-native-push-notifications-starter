@@ -32,7 +32,7 @@ const parseLaunchURLCredentials = (url: URL): Credentials | null => {
 
   const credentials: Credentials = {
     serverURL,
-    userJWTToken
+    userJWTToken,
   };
   return credentials;
 };

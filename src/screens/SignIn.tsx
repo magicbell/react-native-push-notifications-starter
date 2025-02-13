@@ -17,7 +17,7 @@ export const SignInScreen = (): React.JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [serverURL, setServerURL] = useState(defaultCredentials.serverURL);
   const [userJWTToken, setUserJWTToken] = useState(defaultCredentials.userJWTToken);
-  
+
   useEffect(() => {
     if (reviewCredentials) {
       setServerURL(reviewCredentials.serverURL);
