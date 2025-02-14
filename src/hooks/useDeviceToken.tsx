@@ -27,6 +27,13 @@ const fcmTokenPayload = (token: string): FcmToken => {
   };
 };
 
+/**
+ * Registers the device token with the MagicBell API (v2).
+ *
+ * Note that the v2 payload differs from the v1 payload.
+ * Make sure you are using the latest API spec before copying this approach, or check out the previous version in the git history:
+ * https://github.com/magicbell/mobile-inbox/blob/08448958455cd9beffc6fd4a1469d2c16bc93b22/src/hooks/useDeviceToken.tsx#L21-L61
+ */
 const registerTokenWithCredentials = async (token: string, credentials: Credentials) => {
   const client = new UserClient({ baseUrl: `${credentials.serverURL}/v2`, token: credentials.userJWTToken });
   console.info('posting token', token);
