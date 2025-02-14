@@ -8,12 +8,7 @@ export default function MagicBellProvider({ children }: PropsWithChildren<IProps
 
   if (credentials) {
     return (
-      <MagicBell.MagicBellProvider
-        apiKey={credentials.apiKey}
-        userEmail={credentials.userEmail}
-        userKey={credentials.userHmac}
-        serverURL={credentials.serverURL}
-      >
+      <MagicBell.MagicBellProvider serverURL={credentials.serverURL} token={credentials.userJWTToken}>
         <>{children}</>
       </MagicBell.MagicBellProvider>
     );
